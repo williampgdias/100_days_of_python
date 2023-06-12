@@ -1,86 +1,20 @@
-# STEP 4
+# STEP 5
 
-# IMPORT THE MODULE
+# IMPORT MODULES
 import random
+from hangman_art import logo, stages
+from hangman_words import word_list
 
-stages = ['''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
-
+# CREATING THE VARIABLES
 end_of_game = False
-word_list = [
-    "photoshop",
-    "chatgpt",
-    "python",
-    "javascript",
-    "software",
-    "hardware"
-]
 chosen_word = random.choice(word_list)
 word_length = len(chosen_word)
 
-# TODO_1:
-    # CREATE A VARIABLE CALLED "LIVES" TO KEEP TRACK OF THE NUMBER OF LIVES LEFT.
-    # SET "LIVES" EQUAL TO 6.
+# SETTING THE LIVES TO A VARIABLE
 lives = 6
 
-print("Welcome to Hangman. Try to get the word.")
-
-#  TESTING CODE
-print(f"Pssst, the solution is {chosen_word}.")
+print(logo)
+print(f"Be really careful. You only have it {lives} chances.")
 
 # CREATE BLANKS
 display = []
@@ -93,16 +27,18 @@ print(f"{' '.join(display)}")
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
 
+    if guess in display:
+        print(f"You've already guessed {guess}")
+
     # CHECK GUESSED LETTER
     for position in range(word_length):
         letter = chosen_word[position]
         if letter == guess:
             display[position] = letter
 
-    # TODO_2:
-        # IF GUESS IS NOT A LETTER IN THE CHOSEN_WORD, THEN REDUCE "LIVES" BY 1.
-        # IF LIVES GOES DOWN TO 0, THEN THE GAME SHOULD STOP AND IT SHOULD PRINT "YOU LOSE".
+    # CHECKING IF THE GUESS LETTER IS IN THE CHOSEN_WORD
     if guess not in chosen_word:
+        print(f"You've guessed {guess}, that's not in the word. You lose a life.")
         lives -= 1
         if lives == 1:
             print(f"Be careful now. You only has {lives} chance")
@@ -116,8 +52,7 @@ while not end_of_game:
     # CHECK IF THE USER HAS GOT ALL LETTERS
     if "_" not in display:
         end_of_game = True
-        print("You win.")
+        print("Uhuuull... Congratulations! You won!!")
 
-    # TODO_3:
-        # PRINT THE ASCII ART FROM 'STAGES' THAT CORRESPONDS TO THE CURRENT NUMBER OF 'LIVES' THE USER HAS REMAINING.
+    # PRINTING THE ASCII WHEN THE USER MISS THE LETTER
     print(stages[lives])
