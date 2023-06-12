@@ -1,5 +1,6 @@
-# STEP 2
+# STEP 3
 
+# IMPORT THE MODULE
 import random
 
 word_list = [
@@ -12,37 +13,33 @@ word_list = [
 ]
 
 chosen_word = random.choice(word_list)
+word_length = len(chosen_word)
 
 #  TESTING CODE
 print(f"Pssst, the solution is {chosen_word}.")
 
-# TODO_1:
-    # FOR EACH LETTER IN THE CHOSEN_WORD, ADD A "_" TO 'DISPLAY'.
-    # SO, IF THE CHOSEN_WORD WAS "PYTHON", DISPLAY SHOULD BE ["_", "_", "_", "_", "_", "_"] WITH 6 "_" REPRESENTING
-    # EACH LETTER TO GUESS.
+# CREATE BLANKS
 display = []
-word_length = len(chosen_word)
 for _ in range(word_length):
     display += "_"
-print(display)
 
+# TODO_1:
+# USE A WHILE LOOP TO LET THE USER GUESS AGAIN. THE LOOP SHOULD ONLY STOP ONCE THE USER HAS GUESSED ALL THE LETTERS
+# IN THE CHOSEN_WORD AND 'DISPLAY' HAS NO MORE BLANKS ("_"). THEN, YOU CAN TELL THE USER THEY'VE WON.
+end_of_game = False
+while not end_of_game:
+    guess = input("Guess a letter: ").lower()
+    # CHECK GUESSED LETTER
+    for position in range(word_length):
+        letter = chosen_word[position]
+        # print(f"Current position: {position}\n"
+        #       f"Current letter: {letter}\n"
+        #       f"Guessed letter: {guess}"
+        #       )
+        if letter == guess:
+            display[position] = letter
+    print(display)
 
-guess = input("Guess a letter: ").lower()
-
-# TODO_2:
-    # LOOP THROUGH EACH POSITION IN THE CHOSEN_WORD;
-    # IF THE LETTER AT THAT POSITION MATCHES 'GUESS', THEN REVEAL THAT LETTER IN THE DISPLAY AT THAT POSITION.
-    # E.G. IF THE USER GUESSED "P" AND THE CHOSEN WORD WAS "PYTHON", THEN DISPLAY SHOULD BE ["P", "_", "_", "_", "_",
-    # "_"].
-
-for position in range(word_length):
-    letter = chosen_word[position]
-    if letter == guess:
-        display[position] = letter
-
-# TODO_3:
-    # PRINT "DISPLAY" AND YOU SHOULD SEE THE GUESSED LETTER IN THE CORRECT POSITION AND EVERY OTHER LETTER REPLACE WITH
-    # "_".
-    # HINT: DON'T WORRY ABOUT GETTING THE USER TO GUESS THE NEXT LETTER. WE'LL TACKLE THAT IN STEP 3.
-
-print(display)
+    if "_" not in display:
+        end_of_game = True
+        print("You win.")
